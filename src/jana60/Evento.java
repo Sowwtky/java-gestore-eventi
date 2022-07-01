@@ -75,7 +75,6 @@ public class Evento {
 		
 	}
 	
-
 	//getter e setter
 	public String getTitolo() {
 		return titolo;

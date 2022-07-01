@@ -95,7 +95,6 @@ public class Main {
 		int postiDisponibili = nuovoEvento.getNumeroPostiTotali() - nuovoEvento.getNumeroPostiPrenotati();
 		System.out.println("I posti disponinbili sono: " + postiDisponibili);
 		
-		
 		scan.close();
 	}
 
