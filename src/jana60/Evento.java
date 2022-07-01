@@ -14,12 +14,14 @@ public class Evento {
 	private int numeroPostiPrenotati;
 	
 	//costruttore
-	public Evento(String titolo, LocalDate data, int numeroPostiTotali) throws IllegalArgumentException{
+	public Evento(String titolo, LocalDate data, int numeroPostiTotali) throws NullPointerException, IllegalArgumentException{
 		super();
 		
 		//controlli
+		nomeEventoNull(titolo);
 		dataPassata(data);
 		numeroPostiTotaliPositivi(numeroPostiTotali);
+		
 		
 		//valorizzo costruttori
 		this.titolo = titolo;
@@ -32,15 +34,13 @@ public class Evento {
 	public int prenota(int numeroPostiPrenotati) throws IllegalArgumentException{
 		dataPassata(data);
 		alCompleto(numeroPostiTotali, numeroPostiPrenotati);
-		this.numeroPostiPrenotati=numeroPostiPrenotati;
-		return numeroPostiPrenotati++;
+		return this.numeroPostiPrenotati++;
 	}
 	
 	public int disdici(int numeroPostiPrenotati) throws IllegalArgumentException{
 		dataPassata(data);
 		nessunaPrenotazione(numeroPostiPrenotati);
-		this.numeroPostiPrenotati=numeroPostiPrenotati;
-		return numeroPostiPrenotati--;
+		return this.numeroPostiPrenotati--;
 	}
 	
 	//metodi di validazione (private)
@@ -51,13 +51,19 @@ public class Evento {
 	}
 	
 	private void numeroPostiTotaliPositivi(int numeroPostiTotali) throws IllegalArgumentException{
-		if (numeroPostiTotali < 0) {
-			throw new IllegalArgumentException("I posti totali non possono essere minori di 0");
+		if (numeroPostiTotali <= 0) {
+			throw new IllegalArgumentException("I posti totali non possono essere minori o uguali a 0");
+		}
+	}
+	
+	private void nomeEventoNull(String titolo) throws NullPointerException{
+		if (titolo == null || titolo.equalsIgnoreCase("")) {
+			throw new NullPointerException ("L'evento deve avere un titolo");
 		}
 	}
 	
 	private void alCompleto(int numeroPostiTotali, int numeroPostiPrenotati) throws IllegalArgumentException{
-		if (numeroPostiTotali > numeroPostiPrenotati) {
+		if (numeroPostiTotali < numeroPostiPrenotati) {
 			throw new IllegalArgumentException("Siamo al completo");
 		}
 	}
@@ -68,6 +74,7 @@ public class Evento {
 		}
 		
 	}
+	
 
 	//getter e setter
 	public String getTitolo() {
@@ -75,11 +82,7 @@ public class Evento {
 	}
 
 	public void setTitolo(String titolo) throws NullPointerException{
-		//controllo che il titolo non sia null
-		if (titolo == null) {
-			throw new NullPointerException ("L'evento deve avere un titolo");
-		}
-		
+		nomeEventoNull(titolo);
 		this.titolo = titolo;
 	}
 
